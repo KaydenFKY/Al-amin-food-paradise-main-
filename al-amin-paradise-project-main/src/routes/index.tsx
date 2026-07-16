@@ -28,13 +28,16 @@ import { Dialog, DialogTrigger, DialogContent, DialogTitle } from "@/components/
 
 import hero from "@/assets/hero.jpg";
 import menu130 from "@/assets/WhatsApp Image 2026-07-06 at 1.01.30 PM.jpeg";
-import menu323 from "@/assets/WhatsApp Image 2026-07-06 at 3.23.48 PM.jpeg";
+import menu323 from "@/assets/butter-chicken.jpg";
 import menu326 from "@/assets/WhatsApp Image 2026-07-06 at 3.26.49 PM.jpeg";
 import menu334 from "@/assets/WhatsApp Image 2026-07-06 at 3.34.54 PM.jpeg";
 import menu341 from "@/assets/WhatsApp Image 2026-07-06 at 3.41.03 PM.jpeg";
 import comboMee from "@/assets/combo-mee.jpg";
 import comboNasi from "@/assets/combo-nasi.jpg";
 import menu557 from "@/assets/WhatsApp Image 2026-07-06 at 5.22.57 PM.jpeg";
+import rotiJohnImage from "@/assets/WhatsApp Image 2026-07-16 at 6.39.01 PM.jpeg";
+import murtabakImage from "@/assets/WhatsApp Image 2026-07-16 at 6.35.27 PM.jpeg";
+import briyaniImage from "@/assets/WhatsApp Image 2026-07-16 at 6.41.58 PM.jpeg";
 import muttonBiryani from "@/assets/mutton-biryani.jpg";
 import prata from "@/assets/prata.jpg";
 import meeGoreng from "@/assets/mee-goreng.jpg";
@@ -550,15 +553,11 @@ function About() {
 }
 
 const SHOWCASE = [
-  { name: "Briyanee", desc: "Fragrant basmati layered with spiced meat or vegetables, perfumed with saffron, ghee and whole spices.", img: menu130 },
+  { name: "Briyani (Chicken/Mutton/Fish)", desc: "Fragrant basmati layered with spiced meat or vegetables, perfumed with saffron, ghee and whole spices.", img: briyaniImage },
   { name: "Butter Chicken", desc: "Silky tomato-butter gravy coating tender tandoori chicken, finished with cream and kasuri methi.", img: menu323 },
-  { name: "Mutton Masala", desc: "Slow-cooked lamb in a thick, onion-tomato masala with warming spices and a gentle chilli heat.", img: menu326 },
-  { name: "Murtabak", desc: "Crispy-stretched prata stuffed with spiced minced meat, egg and onions, griddled till golden.", img: menu334 },
-  { name: "Ghee Dosai", desc: "Paper-thin dosa brushed with aromatic ghee—crisp edges, soft center—served with chutneys and sambar.", img: gheeDosai },
-  { name: "Roti Bom", desc: "Buttery, caramelised-layered prata: flaky outside, soft and slightly sweet within—irresistible with curry.", img: meeGoreng },
-  { name: "Mee Goreng Combo", desc: "Wok-fried yellow noodles tossed with vegetables, egg and your choice of protein, finished with bold mamak flavours.", img: comboMee },
-  { name: "Nasi Goreng Combo", desc: "Fragrant fried rice stir-fried with vegetables, egg and your choice of protein for a smoky, savoury finish.", img: comboNasi },
-  { name: "Combo Roti John", desc: "Toasted baguette loaded with spiced minced meat, fries and egg, drizzled with sauce—messy, meaty, moreish.", img: menu557 },
+  { name: "Chicken Tikka", desc: "Chargrilled chicken with aromatic spices, served in a smoky, juicy and vibrant profile.", img: chickenTikka },
+  { name: "Murtabak", desc: "Crispy-stretched prata stuffed with spiced minced meat, egg and onions, griddled till golden.", img: murtabakImage },
+  { name: "Roti John", desc: "Toasted baguette loaded with spiced minced meat, fries and egg, drizzled with sauce—messy, meaty, moreish.", img: rotiJohnImage },
 ];
 
 function Showcase() {
@@ -629,21 +628,31 @@ function Showcase() {
   );
 }
 
-const REVIEWS = [
+type Review = {
+  text: string;
+  name: string;
+  rating: number;
+  visible?: boolean;
+};
+
+const REVIEWS: Review[] = [
   {
     text: "One of the better places for mutton biryani around Holland. Tender meat and generous portions.",
     name: "Regular diner",
     rating: 5,
+    visible: true,
   },
   {
     text: "Friendly staff and delicious prata. Great neighbourhood spot for a quick meal.",
     name: "Local resident",
     rating: 4,
+    visible: true,
   },
   {
     text: "The butter chicken and garlic naan are always satisfying. Warm atmosphere and good value.",
     name: "Happy customer",
     rating: 5,
+    visible: true,
   },
 ];
 
@@ -665,18 +674,24 @@ function Reviews() {
       return;
     }
 
-    const newReview = {
+    const isBadReview = newReviewRating <= 2;
+    const newReview: Review = {
       text: trimmedText,
       name: trimmedName,
       rating: newReviewRating,
+      visible: newReviewConsent && !isBadReview,
     };
 
-    if (newReviewConsent) {
+    if (newReview.visible) {
       setReviews((current) => [newReview, ...current]);
       setSuccessMessage("Thanks! Your review is now visible on the website.");
     } else {
       setPrivateReviewCount((current) => current + 1);
-      setSuccessMessage("Thank you! Your feedback is saved privately and will not be published.");
+      setSuccessMessage(
+        isBadReview
+          ? "Thank you! Your feedback is saved privately because the rating is below our public display threshold."
+          : "Thank you! Your feedback is saved privately and will not be published."
+      );
     }
 
     setNewReviewText("");
@@ -725,12 +740,22 @@ function Reviews() {
                 Share your experience with the community and help others discover Al-Amin Food Paradise.
               </p>
             </div>
-            <button
-              type="submit"
-              className="inline-flex items-center justify-center rounded-full bg-gold px-6 py-3 text-sm font-semibold text-charcoal shadow-[var(--shadow-gold)] transition hover:bg-gold/90"
-            >
-              Submit Review
-            </button>
+            <div className="flex flex-wrap gap-3">
+              <a
+                href="https://www.google.com/maps/place/Al-Amin+Food+Paradise/@1.3086811,103.789828,17z/data=!4m8!3m7!1s0x31da1a69f9d8c12f:0x9b7187f076f8937f!8m2!3d1.3086811!4d103.7924029!9m1!1b1!16s%2Fg%2F11f0w_4f02?entry=ttu&g_ep=EgoyMDI2MDcxMy4wIKXMDSoASAFQAw%3D%3D"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center justify-center rounded-full border border-gold/40 bg-gold/10 px-5 py-3 text-sm font-semibold text-gold transition hover:bg-gold/20"
+              >
+                Write or view Google reviews
+              </a>
+              <button
+                type="submit"
+                className="inline-flex items-center justify-center rounded-full bg-gold px-6 py-3 text-sm font-semibold text-charcoal shadow-[var(--shadow-gold)] transition hover:bg-gold/90"
+              >
+                Submit Review
+              </button>
+            </div>
           </div>
           <div className="mt-8 grid gap-5 sm:grid-cols-2">
             <label className="space-y-2 text-sm text-charcoal">
@@ -749,7 +774,7 @@ function Reviews() {
                 <textarea
                   value={newReviewText}
                   onChange={(event) => setNewReviewText(event.target.value)}
-                  placeholder="Tell us what you enjoyed..."
+                  placeholder="Tell us what you enjoyed and how we can improve..."
                   className="min-h-[140px] w-full rounded-2xl border border-border bg-background px-4 py-3 text-sm text-charcoal outline-none transition focus:border-forest/60"
                 />
               </label>
@@ -789,25 +814,27 @@ function Reviews() {
         </form>
 
         <div className="mt-14 grid grid-cols-1 gap-6 md:grid-cols-3">
-          {reviews.map((r, i) => (
-            <figure
-              key={i}
-              className="reveal card-lift flex h-full flex-col rounded-[24px] border border-border bg-card p-8 shadow-[var(--shadow-soft)]"
-              style={{ transitionDelay: `${i * 80}ms` }}
-            >
-              <div className="flex items-center gap-1 text-gold">
-                {Array.from({ length: 5 }).map((_, starIndex) => (
-                  <Star key={starIndex} className="h-4 w-4 fill-current" />
-                ))}
-              </div>
-              <blockquote className="mt-6 flex-1 font-display text-lg leading-relaxed text-charcoal">
-                “{r.text}”
-              </blockquote>
-              <figcaption className="mt-6 border-t border-border pt-4 text-sm text-brown">
-                — {r.name}
-              </figcaption>
-            </figure>
-          ))}
+          {reviews
+            .filter((review) => review.visible !== false)
+            .map((r, i) => (
+              <figure
+                key={i}
+                className="reveal card-lift flex h-full flex-col rounded-[24px] border border-border bg-card p-8 shadow-[var(--shadow-soft)]"
+                style={{ transitionDelay: `${i * 80}ms` }}
+              >
+                <div className="flex items-center gap-1 text-gold">
+                  {Array.from({ length: 5 }).map((_, starIndex) => (
+                    <Star key={starIndex} className="h-4 w-4 fill-current" />
+                  ))}
+                </div>
+                <blockquote className="mt-6 flex-1 font-display text-lg leading-relaxed text-charcoal">
+                  “{r.text}”
+                </blockquote>
+                <figcaption className="mt-6 border-t border-border pt-4 text-sm text-brown">
+                  — {r.name}
+                </figcaption>
+              </figure>
+            ))}
         </div>
       </div>
     </section>

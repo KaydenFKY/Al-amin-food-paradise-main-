@@ -51,6 +51,7 @@ import garlicNaan from "@/assets/garlic-naan.jpg";
 import nasiGoreng from "@/assets/nasi-goreng.jpg";
 import logo from "@/assets/Screenshot 2026-07-06 142719.png";
 import ctaBg from "@/assets/cta-bg.jpg";
+import aboutVideo from "@/components/ui/WhatsApp Video 2026-07-22 at 9.38.13 PM.mp4";
 
 function TikTok(props: React.SVGProps<SVGSVGElement>) {
   return (
@@ -481,32 +482,54 @@ function About() {
     <section id="about" className="relative py-24 sm:py-32">
       <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 px-5 sm:px-8 lg:grid-cols-2 lg:gap-20">
         <div className="reveal relative">
-          <Dialog>
-            <DialogTrigger asChild>
-              <button
-                type="button"
-                className="group overflow-hidden rounded-[32px] border border-border bg-neutral-100 shadow-[0_35px_80px_-40px_rgba(17,24,39,0.45)] transition duration-500 hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-gold/70"
-                aria-label="View restaurant photo"
-              >
-                <img
-                  src={restaurant}
-                  alt="Al-Amin Food Paradise restaurant interior"
-                  loading="lazy"
-                  width={1280}
-                  height={1600}
-                  className="h-full w-full min-h-[420px] object-cover transition duration-500 group-hover:scale-105"
-                />
-              </button>
-            </DialogTrigger>
-            <DialogContent className="w-auto max-w-[95vw] p-0 overflow-hidden rounded-[32px] bg-transparent shadow-none">
-              <img
-                src={restaurant}
-                alt="Al-Amin Food Paradise restaurant interior full photo"
-                loading="eager"
-                className="block w-full max-w-[1200px] object-cover"
+          <div className="overflow-hidden rounded-[32px] border border-border bg-neutral-100 shadow-[0_35px_80px_-40px_rgba(17,24,39,0.45)]">
+            <div className="relative">
+              <Dialog>
+                <DialogTrigger asChild>
+                  <button
+                    type="button"
+                    className="group block w-full overflow-hidden focus:outline-none focus:ring-2 focus:ring-gold/70"
+                    aria-label="View restaurant photo"
+                  >
+                    <img
+                      src={restaurant}
+                      alt="Al-Amin Food Paradise restaurant interior"
+                      loading="lazy"
+                      width={1280}
+                      height={1600}
+                      className="h-full w-full min-h-[420px] object-cover transition duration-500 group-hover:scale-105"
+                    />
+                  </button>
+                </DialogTrigger>
+                <DialogContent className="w-auto max-w-[95vw] p-0 overflow-hidden rounded-[32px] bg-transparent shadow-none">
+                  <img
+                    src={restaurant}
+                    alt="Al-Amin Food Paradise restaurant interior full photo"
+                    loading="eager"
+                    className="block w-full max-w-[1200px] object-cover"
+                  />
+                </DialogContent>
+              </Dialog>
+
+              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-4 text-left text-cream">
+                <p className="text-xs uppercase tracking-[0.25em] text-cream/80">Featured moment</p>
+                <p className="mt-1 text-sm font-medium">A warm look at the restaurant experience</p>
+              </div>
+            </div>
+
+            <div className="border-t border-border/70 bg-card/90 p-3">
+              <video
+                src={aboutVideo}
+                controls
+                autoPlay
+                loop
+                muted={false}
+                playsInline
+                className="w-full rounded-[20px] object-cover"
               />
-            </DialogContent>
-          </Dialog>
+            </div>
+          </div>
+
           <div className="absolute -bottom-6 -right-4 hidden rounded-3xl border border-border bg-cream p-5 shadow-[var(--shadow-elegant)] sm:block">
             <div className="flex items-center gap-3">
               <div className="grid h-12 w-12 place-items-center rounded-xl bg-gold/20 text-gold">
